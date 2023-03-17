@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{{ name }} </title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <h1 class="messenger-header">{{ name }}</h1>
+    
+    <div class="messenger-body" id="messages">
+        <div class="chat-messages">
+          {% for message in messages %}
+            {% if message.from == "BookwormAI" %}
+              <div class="message">
+                <strong>{{ message.from }}:</strong> {{ message.text }}
+              </div>
+            {% else %}
+              <div class="message" id="user">
+                <strong>{{ message.from }}:</strong> {{ message.text }}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+    </div>
+  <div class="chat-input">
+    <form action="/chat" method="post">
+      <input type="text" name="message" placeholder="Type your message here" />
+      <button type="submit">Send</button>
+    </form>
+  </div>  
+  
+</body>
+</html>
