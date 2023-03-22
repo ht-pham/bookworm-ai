@@ -6,11 +6,16 @@ openai.api_key = bookworm.OPENAI_API_KEY
 
 from app import app
 name = "BookwormAI"
-messages= [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI. I am here to help you to get a bite-size summary of your book of interest. Feel free to give me a book title that you want me to summarize for you."}]
+
+messages = [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI."+
+            "I am here to help you to get a bite-size summary of your book of interest."
+            +"Feel free to give me a book title that you want me to summarize for you."}]
 
 @app.route("/")
 def home():
-    reload_messages= [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI. I am here to help you to get a bite-size summary of your book of interest. Feel free to give me a book title that you want me to summarize for you."}]
+    reload_messages = [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI."+
+            "I am here to help you to get a bite-size summary of your book of interest."
+            +"Feel free to give me a book title that you want me to summarize for you."}]
     return render_template("index.html", name=name,messages=reload_messages)
 
 @app.route('/chat', methods=['POST'])
