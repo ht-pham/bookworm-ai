@@ -1,11 +1,11 @@
 import pytest
 #import json
 #from app import app
-from tests import tests
+from tests import app
 
 @pytest.fixture
 def client():
-    with tests.test_client() as client:
+    with app.test_client() as client:
         yield client
 
 def test_home(client):
