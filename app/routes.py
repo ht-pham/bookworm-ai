@@ -1,40 +1,29 @@
 from flask import Flask,render_template, request
-from app import bookworm
-
-import openai
-openai.api_key = bookworm.OPENAI_API_KEY
-
 from app import app
-name = "BookwormAI"
+from app.chatbot import Chatbot
 
-messages = [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI."+
-            "I am here to help you to get a bite-size summary of your book of interest."
-            +"Feel free to give me a book title that you want me to summarize for you."}]
+name = "BookwormAI"
+ai_engine = Chatbot()
+messages = [{"from":name,"text":ai_engine.introduce()}]
 
 @app.route("/")
 def home():
-    reload_messages = [{"from":name,"text":"Welcome to BookwormAI! I am an AI created by OpenAI."+
-            "I am here to help you to get a bite-size summary of your book of interest."
-            +"Feel free to give me a book title that you want me to summarize for you."}]
+    # When the home page is (re)loaded
+    reload_messages = messages
     return render_template("index.html", name=name,messages=reload_messages)
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    # Get the book title from the user
     messages.append({'from':'Human','text':request.form['message']})
-    
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt="Summarize the book title: "+request.form['message'],
-        temperature=0.9,
-        max_tokens=4000,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0.6,
-        stop=[" Human:", " AI:"]
-    ) 
-    answer = response.choices[0].text
+
+    # Process the request from the user
+    ai_engine.receiveBooktitle(request.form['message'])
+    answer = ai_engine.processRequest()
+
+    # Return the summary to the user and auto reply to the user
     messages.append({"from":name,"text":answer})
-    messages.append({"from":name,"text":"Feel free to give me another book title that you want me to summarize for you."})
+    messages.append({"from":name,"text":ai_engine.autoReply()})
     
     return render_template("index.html", name=name,messages=messages)
 
