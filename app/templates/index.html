@@ -14,7 +14,7 @@
         <div class="chat-messages">
           {% for message in messages %}
             {% if message.from == "BookwormAI" %}
-              <div class="message">
+              <div class="message" id="aibot">
                 <strong>{{ message.from }}:</strong> {{ message.text }}
               </div>
             {% else %}

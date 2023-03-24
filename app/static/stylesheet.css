@@ -39,24 +39,36 @@ body {
 .chat-messages {
 	max-height: 1300px;
 	overflow-y: scroll;
+	flex-direction: row;
 }
 
 .message {
-	background-color: #fff;
-	color:#1D3557;
+	
 	padding: 10px;
 	border-radius: 5px;
 	margin-bottom: 10px;
+	
+}
+#aibot{
+	background-color: #fff;
+	color:#1D3557;
+	float:left;
+	width: 50%;
 }
 
 #user {
 	background-color:#0084ff;
 	color: #fff;
+	float:right;
+	width: 50%;
+	align-items: flex-end;
+	
 }
 .chat-input {
 	display: flex;
 	align-items: center;
 	margin-top: 10px;
+	width: 100%;
 }
 
 .chat-input input[type="text"] {
